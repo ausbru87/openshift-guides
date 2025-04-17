@@ -3,5 +3,5 @@
 
 ## Sections
 * rhdocs - Red Hat Documentation PDFs for easy download and access
-* cluster-deployment
+* [[deployment-docs]](deployment-docs)
 * mirror configs
