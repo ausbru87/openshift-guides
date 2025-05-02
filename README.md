@@ -3,4 +3,5 @@
 
 ## Sections
 * [Red Hat Documenation - PDFs](rhdocs)
-* [Deployment Documentation](deployment-docs)
+* [Deployment Docs](deployment-docs)
+  * [oc Mirror](deployment-docs/mirror-setup.md)
