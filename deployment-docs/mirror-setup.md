@@ -10,9 +10,9 @@
 ## Virtual Machines to Build
 | hostname      | network               | vCPU | MEM    | DISK      | Ingress FW Ports | OS       | PKGS                                                        | Purpse/Notes                                                                                                                                  |
 |---------------|-----------------------|------|--------|-----------|------------------|----------|-------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------|
-| oc-downloader | connected to internet | 4-8c | 8-16GB | 1.5-2.0TB | NA               | RHEL v8+ | podman, oc-mirror, vim, tmux                                | This host is the one that will pull all of the images down from the internet and then we will tar them up to migrate to the airgapped network |
+| oc-downloader | connected to internet | 4-8c | 8-16GB | 2.0TB | NA               | RHEL v8+ | podman, oc-mirror, vim, tmux                                | This host is the one that will pull all of the images down from the internet and then we will tar them up to migrate to the airgapped network |
 | oc-tools      | air-gap               | 4c   | 8GB    | 100GB     | NA               | RHEL v9  | oc, oc-mirror, openshift-install, kubectl, helm, curl, tmux | This will be the host that we use to install openshift on the nodes and unpack and import the images to the disconnected registry             |
-| oc-mirror     | air-gap               | 8c   | 16GB   | 1.5-2.0TB | TCP/500, TCP/443 | RHEL v9  | mirror-registry, podman                                     | This host will act as our temporary air-gapped container image registry that will be used to bootstrap the cluster install                    |
+| mirror-registry     | air-gap               | 4c   | 8GB   | 1.0TB | TCP/5000, TCP/443 | RHEL v9  | mirror-registry, podman                                     | This host will act as our temporary air-gapped container image registry that will be used to bootstrap the cluster install                    |
 
 ## oc-downloader Firewall Whitelist
 * You will need to ensure that the oc-downloader host can access the following domains
@@ -41,3 +41,26 @@
 | sso.redhat.com                           | 443  | The https://console.redhat.com site uses authentication from sso.redhat.com                                                                                                                        |
 | storage.googleapis.com/openshift-release | 443  | A source of release image signatures, although the Cluster Version Operator needs only a single functioning source.                                                                                |
 
+## Helper VM/Hosts Setup
+
+### mirror-registry host
+* Install RPM packages
+  * openssl
+  * podman
+* Set host's FQDN: e.g. mirror-registry.domain.com (This FQDN must resolve with your DNS server)
+Download and install CLI tool: https://mirror.openshift.com/pub/cgw/mirror-registry/latest/mirror-registry-amd64.tar.gz
+Install/setup mirror registry, follow the linked documentation
+
+[Setup OC-TOOLS (VM on target network)]
+Install CLI tools
+Download and install oc tools: https://mirror.openshift.com/pub/cgw/mirror-registry/latest/mirror-registry-amd64.tar.gz
+Download and install the openshift-installer tool https://access.redhat.com/downloads/content/290/ver=4.18/rhel---9/4.18.11/x86_64/product-software
+OpenShift v4.18.11 Linux Installer 
+
+[Prep patch/software pulling host (connected to internet)]
+Requires mounted storage of at least 1.5TB to pull all the images and operators
+Recommend creating a 2TB data volume and mounting that to the host under /data/ocmirror or somewhere similar
+Install podman on that host if you have not done so already
+Install tooling https://access.redhat.com/downloads/content/290
+OpenShift v4.18 macOS Clients
+Create credentials follow linked docs
