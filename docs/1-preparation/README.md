@@ -8,8 +8,6 @@ This section covers all the necessary steps to prepare your environment for an O
   - DNS, network, firewall, NTP, and host setup for all cluster nodes.
 - [Helper Host Setup](helper-host-setup.md): 
   - Setting up any additional hosts needed for the deployment process (e.g., bastion, utility hosts).
-- [Internet Downloader Host Setup](internet-downloader-host-setup.md): 
-  - Configure a host with internet access to download and transfer necessary files to the airgapped environment.
 - [Mirror Registry Setup](mirror-registry-setup.md): 
   - Set up a local mirror registry and perform image mirroring.
 - [Reference Materials](../99-references/README.md): 
