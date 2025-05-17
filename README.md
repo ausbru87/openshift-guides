@@ -9,7 +9,7 @@ This project provides a comprehensive guide and resources for deploying OpenShif
 - **[configs/](configs/)**: Configuration files.
   - [README.md](configs/README.md)
 - **[docs/](docs/)**: Main documentation directory.
-  - **[1-preparation/](docs/1-preparation/)**: Preparation phase documentation.
+  - **[1 reparation/](docs/1-preparation/)**: Preparation phase documentation.
   - **[2-mirror-setup/](docs/2-mirror-setup/)**: Mirror registry and image mirroring setup.
   - **[3-cluster-deployment/](docs/3-cluster-deployment/)**: Cluster deployment process.
   - **[4-post-installation/](docs/4-post-installation/)**: Post-installation steps.
