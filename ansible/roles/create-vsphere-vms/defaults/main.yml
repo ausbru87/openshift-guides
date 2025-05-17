@@ -1,0 +1,6 @@
+vm_name: "{{ inventory_hostname }}"
+vm_cpu: 4
+vm_memory: 8192
+vm_disk: 100
+vm_network: "VM Network"
+vm_template: "rhel9-template"

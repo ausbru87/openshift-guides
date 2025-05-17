@@ -1,0 +1,5 @@
+---
+- import_playbook: setup-mirror-registry-host.yml
+- import_playbook: setup-oc-tools-host.yml
+- import_playbook: setup-bootstrap-host.yml
+- import_playbook: setup-oc-downloader-host.yml

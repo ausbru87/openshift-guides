@@ -13,3 +13,30 @@ The configuration files in this directory are designed to be easily customizable
 - **imageset-config.yaml**: Configuration for image sets used in the deployment.
 
 For detailed instructions on how to use these configuration files, please refer to the respective documentation in the `docs/` directory.
+
+
+
+```
+ansible/
+├── README.md
+├── inventory.ini
+├── group_vars/
+│   └── all.yml
+├── host_vars/
+│   └── <hostname>.yml
+├── playbooks/
+│   ├── setup-mirror-registry-host.yml
+│   ├── setup-oc-tools-host.yml
+│   ├── setup-bootstrap-host.yml
+│   ├── setup-oc-downloader-host.yml
+│   └── site.yml                # Orchestrates all host setup playbooks
+├── roles/
+│   ├── create-vsphere-vm/
+│   ├── configure-networking/
+│   ├── install-openshift-tools/
+│   ├── install-dnf-tools/
+│   ├── install-foss-tools/
+│   ├── configure-firewall/
+│   ├── configure-storage/
+│   └── ... (other modular roles as needed)
+```
