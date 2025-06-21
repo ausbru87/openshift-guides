@@ -1,4 +1,4 @@
-# Phase 1: Prerequisites and Planning
+# Planning
 
 This document outlines the infrastructure, network, and software prerequisites for deploying OpenShift 4.18 in an air-gapped, FIPS-compliant environment.
 
@@ -69,17 +69,16 @@ cat /proc/sys/crypto/fips_enabled
 | Role                        | Hostname                | IP Address       |
 |-----------------------------|--------------------------|------------------|
 | Mirror Registry             | tmpregistry.test.com     | 192.168.1.10     |
-| DNS / NTP Server            | dns.test.com             | 192.168.1.12*    |
-| Content Server              | content.test.com         | 192.168.1.13     |
 | Octools (Install Host)      | octools.test.com         | 192.168.1.11     |
+| DNS / NTP Server            | dns.test.com             | 192.168.1.12    |
+| Content Server              | content.test.com         | 192.168.1.13     |
 | NFS Server                  | nfs.test.com             | 192.168.1.15     |
 | Master Node 1               | host01.ove.test.com      | 192.168.1.21     |
 | Master Node 2               | host02.ove.test.com      | 192.168.1.22     |
 | Master Node 3               | host03.ove.test.com      | 192.168.1.23     |
 | Bootstrap Node              | bootstrap.ove.test.com   | 192.168.1.25     |
-| API / Internal API / Apps   | VIPs                     | 192.168.1.30-31  |
-
-📌 *Note: DNS originally listed as `.13` in doc, but Lou clarified it's actually `.12`.
+| OpenShift API   | api.ove.test.com                     | 192.168.1.31  |
+| OpenShift Ingress   | *.apps.ove.test.com                     | 192.168.1.32  |
 
 ---
 
@@ -88,8 +87,32 @@ cat /proc/sys/crypto/fips_enabled
 - Red Hat Pull Secret
 - SSH Public Key (for node access)
 - Registry credentials (for internal Quay install)
+- *.apps.ove.test.com wildcard Certificate (if using TLS)
+- api.ove.test.com Certificate (if using TLS)
+- tmpregistry.test.com Certificate (if using TLS)
 
 ---
+
+## 🛠️ Software Requirements
+- **RHEL 9** for all VMs and bare metal nodes
+- **RHCOS 4.18** for bootstrap node
+- **OpenShift 4.18** installer (octools)
+- **oc-client** for OpenShift CLI operations
+- **oc-mirror v2** for mirroring images
+- **butane** for RHCOS configuration
+- **helm3** for package management
+- **Podman** for container management
+- **NFS** for shared storage
+- **BIND** for DNS
+- **NTP** for time synchronization
+- **HTTP server** for content delivery (Apache or Nginx)
+- **mirror-registry** for temporary internal container registry (optional)
+- **LVM** for disk management on bare metal nodes
+- **firewalld** for firewall management (if applicable)
+- **SELinux** in enforcing mode (default on RHEL)
+- **FIPS** mode enabled on all systems
+- **tar** for archiving and transferring images
+- **curl**, **wget**, **jq** for various scripting tasks
 
 ## ✅ Pre-Deployment Checklist
 
@@ -99,8 +122,26 @@ cat /proc/sys/crypto/fips_enabled
 - [ ] SSH key generated and accessible
 - [ ] vSphere cluster resources allocated
 - [ ] External mirror host built and connected
-
----
-
-Prepared by One Technology Corp
+- [ ] DNS server configured with all required records
+- [ ] NTP server configured and synchronized
+- [ ] NFS server configured and accessible
+- [ ] Content server populated with required OpenShift RHCOS image
+- [ ] Internal registry (tmpregistry) set up and accessible
+- [ ] OpenShift installer (octools) downloaded and configured
+- [ ] Bootstrap node prepared with RHCOS image
+- [ ] All VMs and bare metal nodes reachable via internal DNS
+- [ ] All required certificates generated and distributed;
+- [ ] Firewall rules configured to allow necessary traffic
+- [ ] SELinux in enforcing mode
+- [ ] LVM configured on bare metal nodes
+- [ ] Podman and container registry configured
+- [ ] OpenShift CLI (`oc`) installed on octools host
+- [ ] OpenShift mirror tool (`oc-mirror`) installed on octools host
+- [ ] Butane installed on octools host for RHCOS configuration
+- [ ] Helm3 installed on octools host for package management
+- [ ] All hosts updated to latest RHEL 9 patches
+- [ ] All hosts rebooted after FIPS and updates
+- [ ] Documentation for all steps and configurations completed
+- [ ] Backup of all configurations and important files taken
+- [ ] Final review of all prerequisites completed
 
