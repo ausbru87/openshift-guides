@@ -43,7 +43,7 @@ cat /proc/sys/crypto/fips_enabled
 | Role          | Count | Specs                                        |
 |---------------|-------|----------------------------------------------|
 | Master Nodes  | 3     | 500GB OS disk, 1TB data disk, 1GbE NIC       |
-| NFS Server    | 1     | 3TB SSD storage, 1GbE NIC                    |
+| NFS Server    | 1     | 3TB SSD storage, 3TB HDD, 1GbE NIC           |
 
 ### vSphere VM Resources
 
@@ -70,15 +70,15 @@ cat /proc/sys/crypto/fips_enabled
 |-----------------------------|--------------------------|------------------|
 | Mirror Registry             | tmpregistry.test.com     | 192.168.1.10     |
 | Octools (Install Host)      | octools.test.com         | 192.168.1.11     |
-| DNS / NTP Server            | dns.test.com             | 192.168.1.12    |
+| DNS / NTP Server            | dns.test.com             | 192.168.1.12     |
 | Content Server              | content.test.com         | 192.168.1.13     |
 | NFS Server                  | nfs.test.com             | 192.168.1.15     |
 | Master Node 1               | host01.ove.test.com      | 192.168.1.21     |
 | Master Node 2               | host02.ove.test.com      | 192.168.1.22     |
 | Master Node 3               | host03.ove.test.com      | 192.168.1.23     |
 | Bootstrap Node              | bootstrap.ove.test.com   | 192.168.1.25     |
-| OpenShift API   | api.ove.test.com                     | 192.168.1.31  |
-| OpenShift Ingress   | *.apps.ove.test.com                     | 192.168.1.32  |
+| OpenShift API               | api.ove.test.com         | 192.168.1.31     |
+| OpenShift Ingress           | *.apps.ove.test.com      | 192.168.1.32     |
 
 ---
 
