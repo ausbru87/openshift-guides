@@ -49,26 +49,92 @@ oc-mirror --v2 --help
 Save the following to `imageset-config.yaml`. This file will be environment-specific and maintained in your environment's deployment repository (e.g. `env/cluster-x/imageset-config.yaml`).
 
 ```yaml
-# Example imageset-config.yaml for OpenShift 4.18
-apiVersion: mirror.openshift.io/v2alpha1
 kind: ImageSetConfiguration
+apiVersion: mirror.openshift.io/v2alpha1
 mirror:
   platform:
     channels:
       - name: stable-4.18
+        minVersion: 4.18.0
+        maxVersion: 4.18.20
         type: ocp
     graph: true
     kubeVirtContainer: true
   additionalImages:
+    # Base Container Images
+    - name: registry.redhat.io/ubi8/ubi:latest
     - name: registry.redhat.io/ubi9/ubi:latest
+    
+    # RHEL Guest Images for Virtualization
     - name: registry.redhat.io/rhel9/rhel-guest-image:latest
+    - name: registry.redhat.io/rhel8/rhel-guest-image:latest
+    
+    # Support and Troubleshooting Tools
+    - name: registry.redhat.io/rhel8/support-tools:latest
     - name: registry.redhat.io/rhel9/support-tools:latest
+    
+    # Must-Gather Images for Debugging
     - name: registry.redhat.io/openshift4/ose-must-gather:latest
+    - name: registry.redhat.io/container-native-virtualization/cnv-must-gather-rhel9:v4.18
+    - name: registry.redhat.io/odf4/odf-must-gather-rhel9:v4.18
+    
+    # NFS CSI Driver Dependencies
+    - name: registry.k8s.io/sig-storage/csi-provisioner:v5.2.0
+    - name: registry.k8s.io/sig-storage/csi-attacher:v4.8.0
+    - name: registry.k8s.io/sig-storage/csi-resizer:v1.13.2
+    - name: registry.k8s.io/sig-storage/csi-snapshotter:v8.2.0
+    - name: registry.k8s.io/sig-storage/csi-node-driver-registrar:v2.13.0
+    
   operators:
+    # Red Hat Operator Catalog
     - catalog: registry.redhat.io/redhat/redhat-operator-index:v4.18
       packages:
-        - name: kubevirt-hyperconverged
+        # Core Platform Services
         - name: advanced-cluster-management
+        - name: multicluster-engine
+        - name: multicluster-global-hub-operator-rh
+        - name: openshift-cert-manager-operator
+        - name: nfd
+        - name: windows-machine-config-operator
+        
+        # Storage and Data Management
+        - name: odf-operator
+        - name: odf-csi-addons-operator
+        - name: odf-dependencies
+        - name: odf-prometheus-operator
+        - name: odf-multicluster-orchestrator
+        - name: rook-ceph-operator
+        - name: redhat-oadp-operator
+        
+        # Virtualization Components
+        - name: kubevirt-hyperconverged
+        - name: kubernetes-nmstate-operator
+        - name: quay-operator
+        - name: quay-bridge-operator
+        
+        # Observability and Logging
+        - name: cluster-logging
+        - name: openshift-logging
+        - name: cluster-observability-operator
+        - name: loki-operator
+        
+        # CI/CD and Developer Tools
+        - name: openshift-pipelines-operator-rh
+        - name: openshift-gitops-operator
+        - name: web-terminal
+        - name: ansible-automation-platform-operator
+        
+        # Security and Compliance
+        - name: compliance-operator
+        - name: container-security-operator
+        - name: security-profiles-operator
+        
+    # Certified Operator Catalog
+    - catalog: registry.redhat.io/redhat/certified-operator-index:v4.18
+      packages:
+        # Storage Solutions
+        - name: trident-operator
+
 ```
 
 > 📝 Tailor `additionalImages` and `operators` to your deployment environment and needs.
