@@ -113,7 +113,7 @@ tar -czf ${MIRROR_TAR} ${MIRROR_WORKSPACE}
 
 ---
 
-## 📦 Prepare Software for octools
+## 📦 Prepare Software for Air-Gapped Environment Hosts
 
 This section prepares the necessary software tools for OpenShift deployment in an air-gapped environment.
 

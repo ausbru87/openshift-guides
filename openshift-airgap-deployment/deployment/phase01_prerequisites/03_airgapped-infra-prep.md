@@ -2,7 +2,6 @@
 
 This document outlines the steps to prepare your air-gapped infrastructure for deploying OpenShift 4.18, including physical server preparation, vSphere VM provisioning, and network configuration.
 
-
 ---
 
 ## 🧱 Physical Server Preparation
