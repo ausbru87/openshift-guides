@@ -51,30 +51,25 @@ platform:
     hosts:
     - name: host01
       role: master
-      bmc:
-        address: redfish://192.168.1.21
-        username: admin
-        password: password
-      bootMACAddress: "aa:bb:cc:dd:ee:01"
+      bootMACAddress: "<mac_address_of_host01>"
       rootDeviceHints:
-        deviceName: "/dev/sda"
+        deviceName: "<storage_device_name_of_host01>"
     - name: host02
       role: master
-      bmc:
-        address: redfish://192.168.1.22
-        username: admin
-        password: password
-      bootMACAddress: "aa:bb:cc:dd:ee:02"
+      bootMACAddress: "<mac_address_of_host02>"
       rootDeviceHints:
-        deviceName: "/dev/sda"
+        deviceName: "<storage_device_name_of_host02>"
     - name: host03
       role: master
+      bootMACAddress: "<mac_address_of_host03>"
+      rootDeviceHints:
+        deviceName: "<storage_device_name_of_host03>"
 fips: true
 pullSecret: |
   <your_pull_secret_with_internal_registry>
 sshKey: |
   <openshift_user_public_ssh_key>
-imageSource:
+imageContentSources:
 - mirrors:
   - tmpregistry.test.com:8443/openshift/release-images
   source: quay.io/openshift-release-dev/ocp-release
@@ -83,12 +78,9 @@ imageSource:
   source: quay.io/openshift-release-dev/ocp-v4.0-art-dev
 additionalTrustBundle: |
   -----BEGIN CERTIFICATE-----
-  <registry_certificate_content>
+  < content of /data/openshift/tmpregistry.crt>
   -----END CERTIFICATE-----
-  -----BEGIN CERTIFICATE-----
-  <other_certificates_if_needed_for_your_environment>
-  -----END CERTIFICATE-----
-
+  # Add additional certificates if required
 ```
 
 ## Generate Manifests
@@ -102,6 +94,9 @@ openshift-install create manifests --dir=install-configs
 openshift-install create ignition-configs --dir=install-configs
 ```
 > 📝 This command generates the Ignition configuration files needed for the bootstrap and control plane nodes. These files are essential for bootstrapping the OpenShift cluster.
+
+### Configure master Ignition Files
+
 
 ## Verify Generated Files
 ```bash
