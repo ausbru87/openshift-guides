@@ -27,9 +27,23 @@ sudo dd if=/dev/zero of=/dev/sdb bs=1M count=1000
 sudo wipefs -a /dev/sdb
 ```
 
+### Collect Host Information
+Collect the following information for each bare metal host to be used in the installation configuration during the OpenShift installation process.
+
+| Hostname            | Role        | IP Address   | MAC Address          | Root Disk Device | 
+| host01.ove.test.com | master/worker     | 192.168.1.21 | 00:11:22:33:44:55    | /dev/sda         |
+| host02.ove.test.com | master/worker     | 192.168.1.22 | 00:11:22:33:44:56    | /dev/sda         |
+| host03.ove.test.com | master/worker     | 192.168.1.23 | 00:11:22:33:44:57    | /dev/sda         |
+
+> **NOTE:** All these MAC addresses and storage devices are examples. Replace them with the actual MAC addresses and storage devices of your hosts.
+
 ### Configure Network Interfaces
 
-Assuming that there is a single network interface per host, configure the network interfaces with static IPs as per the environment map.
+Assuming that there is a single network interface per host, configure the network interfaces with static IPs as per the environment map. 
+
+
+> All these MAC addresses are examples. Replace them with the actual MAC addresses of your hosts.
+
 
 Assign static IPs based on the Host table below:
 
